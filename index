@@ -1,0 +1,44 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+
+export default function Poll() {
+  const dates = ["February 21", "March 12", "March 26", "March 27"];
+  const [selectedDates, setSelectedDates] = useState([]);
+
+  const toggleDate = (date) => {
+    setSelectedDates((prev) =>
+      prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date]
+    );
+  };
+
+  const submitAvailability = () => {
+    alert(`You selected: ${selectedDates.join(", ")}`);
+    // Here you would send the data to a backend
+  };
+
+  return (
+    <div className="flex flex-col items-center p-6">
+      <Card className="w-full max-w-md p-6">
+        <CardContent>
+          <h2 className="text-xl font-bold mb-4">Select Your Availability</h2>
+          <div className="space-y-2">
+            {dates.map((date) => (
+              <div key={date} className="flex items-center space-x-2">
+                <Checkbox
+                  checked={selectedDates.includes(date)}
+                  onCheckedChange={() => toggleDate(date)}
+                />
+                <span>{date}</span>
+              </div>
+            ))}
+          </div>
+          <Button className="mt-4 w-full" onClick={submitAvailability}>
+            Submit Availability
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
